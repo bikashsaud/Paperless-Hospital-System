@@ -1,0 +1,72 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h1>All Patients List</h1><br>
+							</div>
+			      </div>
+			    </div>
+			  </section>
+			  </div><br>
+
+				<div class="">
+
+				  <div class="">
+				    <!-- <h3>New Added Doctor</h3> -->
+				    <div class="row ">
+				      <div class="container">
+				        <table class="table table-dark">
+				          <thead>
+
+				            <tr>
+				                  {% autoescape on %}
+				              <th scope="col">Uid</th>
+				              <th scope="col">id</th>
+				              <th scope="col">Name</th>
+				              <th scope="col">Email</th>
+				              <th scope="col">Date</th>
+				              <th scope="col">Phone no.</th>
+				              <th scope="col">Address</th>
+				              <th scope="col">Sex</th>
+				              <th scope="col">Age</th>
+											<th scope="col">About</th>
+				              <th scope="col">Actions</th>
+
+				          <!-- phoneno, p_address,t_address,sex, age, specialist, portfolio, degree, university,experience,join_date -->
+				              <!-- <th scope="col">{{user.email}}</th> -->
+				                {% endautoescape %}
+				            </tr>
+				          </thead>
+				          <tbody>
+
+				            {% for f in d %}
+
+				             <tr>
+				               <td>{{f.user.id}}</td>
+				               <td>{{f.id}}</td>
+				               <td>{{f.name}}</td>
+				               <td>{{f.email}}</td>
+				               <td>{{f.date}}</td>
+				               <td>{{f.phoneno}}</td>
+				               <td>{{f.address}}</td>
+				               <td>{{f.sex}}</td>
+				               <td>{{f.age}}</td>
+				               <td>{{f.about}}</td>
+				               <td>
+				                <a href="{% url 'patientview_profile' f.id %}"><i class="fa fa-eye"></i></a>
+				               </td>
+
+				            </tr>
+				          {% endfor %}
+				          </tbody>
+				        </table>
+
+				</div>
+
+
+				{% endblock %}

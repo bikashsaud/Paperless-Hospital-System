@@ -1,0 +1,87 @@
+
+
+{% extends 'master/base.html' %}
+{% load widget_tweaks %
+{% load staticfiles %}
+  {% block title %}  admin DashBoard {% endblock %}
+
+  {% block body %}
+  <section  class="basic">
+
+  <div class="header">
+    <a href="#" class="nav-trigger"><span></span></a>
+    <h1 class="h1">DOCTOR DASHBOARD FOR FROFILE </h1>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul >
+        <!-- <li>
+          <a href="#">
+            <span><i class="fa fa-home"></i></span>
+            <span class="span">Hospital System</span>
+          </a>
+        </li> -->
+        <li style="background-color:#3E3E40">
+          <a href="{% url 'profilepicture' %}">
+            <div class="image1">
+              <!-- static 'img/1.jpg' -->
+              <img src="{% static 'img/1.jpg' %}" alt="Photo Of admin "  class="image1">
+              <!-- <span><i class="fa fa-phone"></i></span> -->
+              <h5>Bikash Saud</h5>
+              <!-- <span class="span">Message</span> --><p> </p>
+            </div>
+
+          </a>
+        </li>
+        <li>
+          <div class="side" style='padding-left:20px; margin: 10px;'>
+
+              <a href="{% url 'editdoctorprofile'%}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                <a href="{% url 'logout' %}"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+          </div>
+          </li>
+          <li>
+            <div class="side" style='padding-left:20px; margin: 10px;'>
+
+                <a href="{% url 'show_profile' %}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">SHOW PROFILE</span></h5></a><br>
+                  <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                  <a href="#"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+            </div>
+            </li>
+
+      </ul>
+    </nav>
+  </div>
+
+<!-- ==========================================================================
+ADD BUTTON START
+=========================================================================== -->
+
+<div class="container" style="color:white; padding:180px 0 0 250px ;">
+    <p>id: {{ request.user.id }}</p>
+    <p>Name: {{ request.user.name }}</p>
+    <p>id: {{ request.user.email }}</p>
+    <p>Phone: {{ user.doctor.phoneno }}</p>
+    <p>Permanent Address: {{ user.doctor.p_address }}</p>
+    <p>Temporary Address: {{ user.doctor.t_address }}</p>
+    <p>Sex: {{ user.doctor.sex }}</p>
+    <p>Age: {{ user.doctor.age }}</p>
+    <p>specialist: {{ user.doctor.specialist }}</p>
+    <p>Website: {{ user.doctor.portfolio }}</p>
+    <p>Degree: {{ user.doctor.degree }}</p>
+    <p>University: {{ user.doctor.university }}</p>
+    <p>Experience: {{ user.doctor.experience }}</p>
+    <p>Joun Date: {{ user.doctor.join_date }}</p>
+    {% if user.doctor.image %}
+    <img src="{{ user.doctor.image.url }}" width="140">
+    {% endif %}
+</div>
+
+  <!-- =================================================
+                      Start TAbles
+  ================================================= -->
+
+    </section>
+    <br>
+  {% endblock %}

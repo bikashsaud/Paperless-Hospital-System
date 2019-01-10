@@ -1,0 +1,25 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h1>tests</h1><br>
+								<h2>Internship Project</h2>
+			        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div>
+
+
+		<form class="" action="" method="post">
+			{{mform}}
+			{% csrf_token %}
+			<input type="submit" name="save" value="">
+
+		</form>
+      {% endblock %}

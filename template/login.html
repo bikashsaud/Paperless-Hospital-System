@@ -1,0 +1,76 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+{% block body %}
+<div class="main" role="main">
+  <!-- Page Heading -->
+  <section class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 form-heading">
+          <h1>User Login</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!--
+<br>
+<section class="login">
+<form method="post">
+{% csrf_token %}
+<table>
+</table>
+<button type="submit">Login</button>
+{% if user.is_admin %}
+<a href="{% url 'register' %}">Register New User</a>
+{% endif %}
+</form>
+</section> -->
+<!-- {{user.is_superuser}} -->
+
+<section class="div" id="LoginForm">
+  <div class="container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <p class="{{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- <h1 class="form-heading">login Form</h1> -->
+    <div class="login-form">
+      <div class="main-div">
+        <div class="panel">
+          <h2>Login To DashBoard</h2>
+          <p>Please enter your email and password</p>
+        </div>
+        <form  method="POST">
+          {% csrf_token %}
+          <!-- {{ form.non_field_errors }} -->
+
+          {% for field in form %}
+          {{field.label_tag}}
+          <div class="input-group">
+            {{field|add_class:'form-control'}}
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Login</button>
+
+          {% if user.is_admin or user.is_staff or user.is_superuser %}
+          <div class="forgot">
+            <a href="{% url 'register' %}">Register User  </a>&nbsp&nbsp&nbsp
+
+            {% endif %}
+
+            <a href="#">Forget Password?</a>
+
+
+
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+                <!-- <img src="{{form.image.url}}" alt=""> -->
+								<h2 style=" text-transform: uppercase;">{{form.name}}</h2>
+			        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div>
+<div class="row"  style="background-color:#EAE78C; padding:50px 0 0 400px;">
+<div class="thumbnail">
+  <div class="col-md-12" >
+		<div class="" style="padding:40px;">
+			<form class="" action="" method="post">
+
+
+			<li style="padding:15px;">ID:{{form.id}}</li>
+			<li style="padding:15px;">Name:{{form.name}}</li>
+			<li style="padding:15px;">Age:{{form.age}}</li>
+			<li style="padding:15px;">Phone No.:{{form.phoneno}}</li>
+			<li style="padding:15px;">Address:{{form.address}}</li>
+			<li style="padding:15px;">Date:{{form.date}}</li>
+			<li style="padding:15px;">About:{{form.about}}</li>
+
+			<div class="" style="color:white;">
+				<button type="button" name="button" class="btn btn-primar"><a href="{% url 'medicine' form.id %}">Go To Medicine</a></button>
+			<button type="button" name="button" class="btn btn-primar"><a href="{% url 'tests' %}">Go To Lab</a></button>
+
+			</form>
+		</div>
+
+<!-- <h1>Medical treatments</h1> -->
+<!-- <form class="" action="" method="post"> -->
+	{%csrf_token %}
+	<!-- {{mform.as_p}} -->
+<!-- <h1>Lab test</h1> -->
+
+	<!-- {{lform.as_p}} -->
+	<!-- <a href=""><button type="submit" name="btn btn-primary">Medicine and Test List</button></a><br><br> -->
+<!-- </form> -->
+  </div>
+</div>
+</div>
+{% endblock %}

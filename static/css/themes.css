@@ -1,0 +1,26 @@
+
+body {
+  background-color: #fafafa;
+  /* color: #8c8c8c; */
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 300;
+  margin: 0;
+  overflow-x: hidden;
+
+
+}
+
+/* Page Heading */
+.page-heading {
+  color: white;
+
+  background: #b4b4b4 url(static/img/bg1.jpg) 50% 0 no-repeat fixed;
+  -webkit-background-size: cover;
+  background-size: cover;
+  position: relative;
+  text-align: center;
+  padding: 72px 0;
+  /* Page Title */
+}
