@@ -100,21 +100,19 @@ ADD BUTTON START
 
             {% for f in query %}
              <tr>
+               {% csrf_token %}
                 <td>{{ f.id }}</td>
                  <td>{{ f.name }}</td>
                <td>{{ f.date }}</td>
                <td>{{ f.phoneno }}</td>
                <td>{{ f.address }}</td>
               <td><a href="{% url 'give_medicines' f.id %}"><i class="fa fa-sign-in fa-2x"></i></a></td>
-
             </tr>
             {% endfor %}
           </tbody>
         </table>
         <br><button type="button" class="btn btn-info">View all Patients</button>
         <br>
-
-{{request.user.image}}
       </div>
     </div>
   </div>

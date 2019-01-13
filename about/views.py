@@ -102,7 +102,6 @@ def editadminprofile(request):
 
 @login_required()
 def editdoctorprofile(request):
-
 # if request.user.is_doctor:
     users=UserProfile.objects.get(id=request.user.id)
     doct=mydoctor.objects.get(user=users.id)
@@ -263,18 +262,14 @@ def tests(request):
 def give_medicines(request,id):
     if request.user.is_authenticated():
         form=Patient.objects.get(id=id)
-        lform=D_Medical.objects.filter(patient=id).last()
-        # user=UserProfile.objects.get(id=request.user.id)
-        profile=mymedical.objects.get(user=request.user.id)
-        print(profile)
-        mform=MedicineForm(request.POST or None)
+        lform=D_Medical.objects.filter(patient_id=id).order_by('-date')
+        mform=D_MedicalForm(request.POST or None)
+        # user=UserProfile.objects.get(id=request.user.id)# profile=mymedical.objects.get(user=request.user.id)# mform=MedicineForm(request.POST or None)
         if mform.is_valid():
-            abc=mform.save(commit=False)
-            abc.patient_id=id
-            abc.medical_id=profile.id
-            abc.save()
+            # abc=mform.save(commit=False)# abc.patient_id=id # abc.medical_id=profile.id
+            mform.save()
             return redirect("doctordb")
-        context={"form":form,
+        context={   "form":form,
                     "lform":lform,
                     "mform":mform,
                     }
