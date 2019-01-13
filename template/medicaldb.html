@@ -1,0 +1,123 @@
+
+
+{% extends 'master/base.html' %}
+{% load widget_tweaks %
+{% load staticfiles %}
+  {% block title %}  admin DashBoard {% endblock %}
+
+  {% block body %}
+  <section  class="basic">
+
+  <div class="header">
+    <a href="#" class="nav-trigger"><span></span></a>
+    <h1 class="h1">MEDICAL DASHBOARD </h1>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul >
+        <!-- <li>
+          <a href="#">
+            <span><i class="fa fa-home"></i></span>
+            <span class="span">Hospital System</span>
+          </a>
+        </li> -->
+        <li style="background-color:#3E3E40">
+          <a href="#">
+            <div class="image1">
+              <img src="{% static 'img/1.jpg' %}" alt="Photo Of admin "  class="image1">
+              <!-- <span><i class="fa fa-phone"></i></span> -->
+              <h5>Bikash Saud</h5>
+              <!-- <span class="span">Message</span> --><p> </p>
+            </div>
+
+          </a>
+        </li>
+        <li>
+          <div class="side" style='padding-left:20px; margin: 10px;'>
+
+              <a href="#"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                <a href="{% url 'logout' %}"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+          </div>
+          </li>
+          <li>
+            <div class="side" style='padding-left:20px; margin: 10px;'>
+
+                <a href="#"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                <a href="{% url 'change_password' %}"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">Change Password</span></h5></a>
+                  <a href="#"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+            </div>
+            </li>
+            <li>
+              <div class="side" style='padding-left:20px; margin: 10px;'>
+
+                  <a href="#"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                    <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                    <a href="#"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+              </div>
+              </li>
+      </ul>
+    </nav>
+  </div>
+
+<!-- ==========================================================================
+ADD BUTTON START
+=========================================================================== -->
+
+<div class="">
+  <div class="btnstyle">
+    <div class="row btnstylerow" style="height:60px">
+      <div class="container">
+        <form class="example" action="" metho="GET" style="margin:auto;max-width:300px">
+          <input type="text" placeholder="Search..." name="q" value="{{request.GET.q}}"/>
+          <button style="padding:14px;" type="submit" value="search"><i class="fa fa-search "></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- =================================================
+                      Start TAbles for patients
+  ================================================= -->
+  <div class="tblstyle" style="padding-top:18px;">
+    <h3>New Added Patients Lists</h3>
+    <div class="row ">
+      <div class="container">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+
+              <th scope="col">id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Phone no.</th>
+              <th scope="col">Address</th>
+              <th scope="col">Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for f in query %}
+             <tr>
+                <td>{{ f.id }}</td>
+                 <td>{{ f.name }}</td>
+               <td>{{ f.date }}</td>
+               <td>{{ f.phoneno }}</td>
+               <td>{{ f.address }}</td>
+              <td><a href="{% url 'give_medicines' f.id %}"><i class="fa fa-sign-in fa-2x"></i></a></td>
+
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <br><button type="button" class="btn btn-info">View all Patients</button>
+        <br>
+
+{{request.user.image}}
+      </div>
+    </div>
+  </div>
+    </section>
+    <br>
+  {% endblock %}

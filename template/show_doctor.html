@@ -1,0 +1,90 @@
+
+
+{% extends 'master/base.html' %}
+{% load widget_tweaks %
+{% load staticfiles %}
+  {% block title %}  admin DashBoard {% endblock %}
+
+  {% block body %}
+  <section  class="basic">
+
+  <div class="header">
+    <a href="#" class="nav-trigger"><span></span></a>
+    <h1 class="h1">Admin DASHBOARD FOR USer FROFILE </h1>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul >
+        <!-- <li>
+          <a href="#">
+            <span><i class="fa fa-home"></i></span>
+            <span class="span">Hospital System</span>
+          </a>
+        </li> -->
+        <li style="background-color:#3E3E40">
+          <a href="{% url 'profilepicture' %}">
+          
+          </a>
+        </li>
+        <li>
+          <div class="side" style='padding-left:20px; margin: 10px;'>
+
+              <a href="{% url 'editadminprofile'%}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                <a href="{% url 'logout' %}"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+          </div>
+          </li>
+          <li>
+            <div class="side" style='padding-left:20px; margin: 10px;'>
+
+                <a href="{% url 'show_adminprofile' %}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">SHOW PROFILE</span></h5></a><br>
+                  <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                  <a href="#"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+            </div>
+            </li>
+
+      </ul>
+    </nav>
+  </div>
+
+<!-- ==========================================================================
+ADD BUTTON START   phoneno
+p_address
+t_address
+sex
+age
+post
+image
+cv
+Portfolio
+degree
+university
+experience
+join_date
+=========================================================================== -->
+
+<div class="container" style="color:white; padding:180px 0 0 250px ;">
+    <p>id: {{ doct.id }}</p>
+    <p>Name: {{ doct.user.name }}</p>
+    <p>id: {{ doct.user.email }}</p>
+    <p>Phone: {{ doct.phoneno }}</p>
+    <p>Permanent Address: {{ doct.p_address }}</p>
+    <!-- <p>Temporary Address: {{ doct.t_address }}</p> -->
+    <p>Sex: {{ doct.sex }}</p>
+    <p>Age: {{ doct.age }}</p>
+    <!-- <p>Post: {{ doct.post }}</p> -->
+    <p>Website: {{ doct.portfolio }}</p>
+    <!-- <p>Degree: {{ doct.degree }}</p> -->
+    <!-- <p>University: {{ doct.university }}</p> -->
+    <!-- <p>Experience: {{ doct.experience }}</p> -->
+    <!-- <p>Joun Date: {{ doct.join_date }}</p> -->
+
+  </div>
+
+  <!-- =================================================
+                      Start TAbles
+  ================================================= -->
+
+    </section>
+    <br>
+  {% endblock %}

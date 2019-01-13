@@ -1,0 +1,48 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+	<div class="main" role="main">
+		<!-- Page Heading -->
+		<section class="page-heading">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 form-heading">
+						<h1>Register User</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		</div>
+		<!-- <br><br>
+      <form class="forms" action="" method="post">{% for fr in form %}	<div class="form-group"><label>{{ fr.label_tag }}	<span class='required'>*</span>	</label>
+					{% csrf_token %}{{ fr }}{{fr.errors}}	</div> {% endfor %}	<input type="submit" name="Register" value="submit"> </form> -->
+
+			<section id="LoginForm">
+		<div class="container">
+
+		<div class="login-form">
+		<div class="main-div">
+				<div class="panel">
+
+			 <h3>Please Register Requierd User</h3>
+			 </div>
+				<form id="Login" class="forms" action="" method="post">
+
+						<div class="form-group">
+							{% for fr in form %}
+							<div class="form-group">
+								<label>
+									{{ fr.label_tag }}
+									<span class='required'>*</span>
+								</label>
+								{% csrf_token %}
+								{{ fr|add_class:'form-control' }}
+									{{fr.errors}}
+							</div>
+							{% endfor %}
+				    <button type="submit" class="btn btn-primary">Register</button>
+							</form>
+				</div>
+		</div></div>
+		</section>
+      {% endblock %}

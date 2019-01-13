@@ -1,0 +1,138 @@
+
+
+{% extends 'master/base.html' %}
+{% load widget_tweaks %
+{% load staticfiles %}
+  {% block title %}  admin DashBoard {% endblock %}
+
+  {% block body %}
+  <section  class="basic">
+
+  <div class="header">
+    <a href="#" class="nav-trigger"><span></span></a>
+    <h1 class="h1">Admin DASHBOARD FOR USer FROFILE </h1>
+  </div>
+  <div class="side-nav">
+    <nav>
+      <ul >
+        <!-- <li>
+          <a href="#">
+            <span><i class="fa fa-home"></i></span>
+            <span class="span">Hospital System</span>
+          </a>
+        </li> -->
+        <li style="background-color:#3E3E40">
+          <a href="{% url 'profilepicture' %}">
+            <div class="avatar">
+                {% if con.image %}
+                <img src='{{con.image.url}}' alt="Photo Of admin "  class="image1">
+                {% endif %}
+            </div>
+          </a>
+        </li>
+        <li>
+          <div class="side" style='padding-left:20px; margin: 10px;'>
+
+              <a href="{% url 'editadminprofile'%}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">EDIT PROFILE</span></h5></a><br>
+                <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                <a href="{% url 'logout' %}"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+          </div>
+          </li>
+          <li>
+            <div class="side" style='padding-left:20px; margin: 10px;'>
+
+                <a href="{% url 'show_adminprofile' %}"> <h5><i class="fa fa-edit"></i><span style="padding-left:20px;">SHOW PROFILE</span></h5></a><br>
+                  <a href="#"><h5><i class="fa fa-home"></i><span style="padding-left:20px;"></span>HOME</h5></a><br>
+                  <a href="#"> <h5><i class="fa fa-sign-out"></i> <span style="padding-left:20px;">LOGOUT</span></h5></a>
+            </div>
+            </li>
+
+      </ul>
+    </nav>
+  </div>
+
+<!-- ==========================================================================
+ADD BUTTON START   phoneno
+p_address
+t_address
+sex
+age
+post
+image
+cv
+Portfolio
+degree
+university
+experience
+join_date
+=========================================================================== -->
+
+<div class="container" style="color:white; padding:180px 0 0 250px ;">
+
+  <!-- =================================================
+                      Start TAbles
+  ================================================= -->
+
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-sm-5">
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+                <div class="avatar">
+                    {% if con.image %}
+                    <img src='{{con.image.url}}' alt="Photo Of admin "  class="image1">
+                    {% endif %}
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a target="_blank" href="#">{{request.user.name}}</a>
+                    </div><br>
+                    <!-- <div class="col-lg-4 col-sm-5"> -->
+                      <div class="desc">id: {{ request.user.id }}</div>
+                      <div class="desc">Name: {{ request.user.name }}</div>
+                      <div class="desc">Email: {{ request.user.email }}</div>
+                      <div class="desc">Sex: {{ user.superadmin.sex }}</div>
+                      <div class="desc">Post: {{ user.superadmin.post }}</div>
+
+                      <div class="desc">Uid: {{ request.user.user.id }}</div>
+                      <div class="desc">Phone: {{ user.superadmin.phoneno }}</div>
+                      <div class="desc"> Address: {{ user.superadmin.p_address }}</div>
+                      <div class="desc">Age: {{ user.superadmin.age }}</div>
+                      <div class="desc">Website: {{ user.superadmin.portfolio }}</div>
+                    </div>
+                <!-- </div> -->
+                <div class="bottom">
+                    <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" rel="publisher"
+                       href="https://plus.google.com/+ahmshahnuralam">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a class="btn btn-primary btn-sm" rel="publisher"
+                       href="https://plus.google.com/shahnuralam">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
+                        <i class="fa fa-behance"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+	</div>
+</div>
+
+
+
+      </div>
+    </section>
+    <br>
+  {% endblock %}

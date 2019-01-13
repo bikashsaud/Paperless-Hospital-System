@@ -1,0 +1,30 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+	<div class="main" role="main">
+		<!-- Page Heading -->
+		<section class="page-heading">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 form-heading">
+						<h1>Register Patients</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		</div>
+<br><br>
+<form class="form-horizontal" method="POST" action="{% url 'patient_register' %}" enctype=multipart/form-data>
+    {{form.as_p}}
+	{% csrf_token %}
+	<div class="form-group">
+		 <div class="col-sm-offset-2 col-sm-10">
+			 <a href="{% url 'patient_register' %}"><button type="submit" class="btn btn-primary">REGISTER</button></a>
+		 </div>
+	 </div>
+  </form>
+
+
+  <br><br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

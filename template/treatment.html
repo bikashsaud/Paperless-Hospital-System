@@ -1,0 +1,148 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+{% block body %}
+<div class="main" role="main">
+	<!-- Page Heading -->
+	<section class="page-heading">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- <img src="{{form.image.url}}" alt=""> -->
+					<h2 style=" text-transform: uppercase;">{{form.name}}</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<div class="row"  style="background-color:#; padding:50px 0 0 40px;">
+	<div class="container">
+
+
+		<div class="col-md-4" >
+			<div class="thumbnail">
+
+				<!-- <div class="" style="padding:40px;"> -->
+				<form class="" action="" method="post">
+
+
+					<li style="padding:15px;">ID:{{form.id}}</li>
+					<li style="padding:15px;">Name:{{form.name}}</li>
+					<li style="padding:15px;">Age:{{form.age}}</li>
+					<li style="padding:15px;">Phone No.:{{form.phoneno}}</li>
+					<li style="padding:15px;">Address:{{form.address}}</li>
+					<li style="padding:15px;">Date:{{form.date}}</li>
+					<li style="padding:15px;">About:{{form.about}}</li>
+
+					<div class="" style="color:white;">
+					<button type="button" name="button" class="btn btn-primar"><a href="{% url 'medicine' form.id %}">Go To Medicine</a></button>
+					<button type="button" name="button" class="btn btn-primar"><a href="{% url 'tests' %}">Go To Lab</a></button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="col-md-8">
+
+
+				<div class="tab">
+					<button class="tablinks active" onclick="openCity(event, 'London')">Medicine</button>
+					<button class="tablinks" onclick="openCity(event, 'Paris')">Tests</button>
+				</div>
+
+				<div id="London" class="tabcontent">
+					<div class="row ">
+						<div class="container">
+							<table class="table table-dark">
+								<thead>
+									<tr>
+										<th scope="col">id</th>
+										<th scope="col">Name</th>
+										<th scope="col">Date</th>
+										<th scope="col">Medicine Name</th>
+										<th scope="col">Comment</th>
+										<th scope="col">Follow On Date</th>
+										<th scope="col">Is_Purchased</th>
+										<th scope="col">save</th>
+
+									</tr>
+									{% for i in form1 %}
+									<tr>
+										<td>{{i.id}}</td>
+										<td>{{i.patient.name}}</td>
+										<td>{{i.date}}</td>
+										<td>{{i.medicine_name}}</td>
+										<td>{{i.comment}}</td>
+										<td>{{i.follow_on_date}}</td>
+										<td>{{i.is_purchased}}</td>
+										<!-- <td>{{form2.is_purchased}}</td> -->
+
+									</tr>
+									{% endfor %}
+
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div id="Paris" class="tabcontent">
+					<div class="row ">
+						<div class="container">
+							<table class="table table-dark">
+								<thead>
+									<tr>
+										<th scope="col">id</th>
+										<th scope="col">Date</th>
+										<th scope="col">Test Name</th>
+										<th scope="col">Comment</th>
+										<th scope="col">Follow On Date</th>
+										<th scope="col">Is_Purchased</th>
+									</tr>
+
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<!-- <form class="" action="" method="post">
+					{{form2.medicine_name}}
+
+					<table class="table table-dark">
+						<thead>
+							<tr>
+
+								<th scope="col">Medicine_Name</th>
+								<th scope="col">Comment</th>
+								<th scope="col">Follow on Date</th>
+								<th scope="col">Date</th>
+								<th scope="col">Is_Purchased</th>
+								<th scope="col">Patient</th>
+								<th scope="col">Doctor</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							 <tr>
+								 {% csrf_token %}
+								 <td>{{form2.medicine_name}}</td>
+								 <td>{{form2.comment}}</td>
+								 <td>{{form2.follow_on_date }}</td>
+								 <td>{{form2.date}}</td>
+								 <td>{{form2.is_purchased}}</td>
+								 <td>{{form2.patient}}</td>
+								 <td>{{form2.doctor}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</form> -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

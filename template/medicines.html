@@ -1,0 +1,102 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h1>Hospital Management System</h1><br>
+								<h2>Internship Project</h2>
+			        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div>
+
+		<div class="container">
+			<div class="col-md-8">
+				<form class="" action="" method="post">
+					{{mform.as_p}}
+					{%csrf_token%}
+					<input type="submit" name="" value="submit">
+				</form>
+			</div>
+
+		</div>
+      {% endblock %}
+
+			{% block javascript%}
+
+
+			    <script type="text/javascript">
+			        var dataJSON = '';
+			        var output = document.getElementById('output');
+			        var taskList = document.querySelector('#taskList');
+			        document.getElementById('myForm').addEventListener('submit', function (e) {
+			            e.preventDefault();
+			            var tempValue = document.querySelector('input[name="task"]').value;
+			            addNewItem({
+			                "info": tempValue
+			                , "status": false
+			            })
+			        })
+			        window.onload = function () {
+			            if (sessionStorage['tasklist'] != null) {
+			                dataJSON = JSON.parse(sessionStorage['tasklist']);
+			                buildCheckboxes(dataJSON)
+			            }
+			            else {
+			                //var data = '[{"info":"Cut the Grass","status":false},{"info":"Clean Room","status":true},{"info":"Go to Gym","status":false},{"info":"Make Dinner","status":false}]';
+			                var xhr = new XMLHttpRequest();
+			                xhr.onreadystatechange = function () {
+			                    if (xhr.readyState == 4 && xhr.status == 200) {
+			                        var data = xhr.responseText;
+			                        dataJSON = JSON.parse(data);
+			                        buildCheckboxes(dataJSON)
+			                    }
+			                }
+			                xhr.open("GET", 'http://api.bikash.com/bins/rpgux', true);
+			                xhr.send();
+			            }
+			        }
+			        function addNewItem(data) {
+			            addCheckbox(data, dataJSON.length);
+			            dataJSON.push(data);
+			            sessionStorage['tasklist'] = JSON.stringify(dataJSON);
+			        }
+			        function addCheckbox(data, key) {
+			            var li = document.createElement('li');
+			            var checkbox = document.createElement('input')
+			            var textInside = document.createTextNode(data.info);
+			            var span = document.createElement('span');
+			            span.innerHTML = 'X';
+			            span.onclick = remove;
+			            checkbox.type = 'checkbox';
+			            checkbox.value = key;
+			            checkbox.checked = data.status;
+			            checkbox.setAttribute('onchange', 'updateJSON()');
+			            li.appendChild(textInside);
+			            li.appendChild(checkbox);
+			            li.appendChild(span);
+			            document.querySelector('#taskList').appendChild(li);
+			        }
+			        function remove(event) {
+			            var index = this.previousElementSibling.value;
+			            taskList.innerHTML = '';
+			            dataJSON.splice(index, 1)
+			            buildCheckboxes(dataJSON)
+			        }
+			        function buildCheckboxes(data) {
+			            for (var key in data) {
+			                addCheckbox(data[key], key)
+			            }
+			        }
+			        function updateJSON() {
+			            var key = event.target.value;
+			            dataJSON[key].status = event.target.checked;
+			            sessionStorage['tasklist'] = JSON.stringify(dataJSON);
+			        }
+			    </script>
+			{% endblock %}

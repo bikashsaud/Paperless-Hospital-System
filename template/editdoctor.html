@@ -1,0 +1,29 @@
+
+{% extends 'master/base.html' %}
+{% load widget_tweaks %
+{% load staticfiles %}
+  {% block title %}  admin{% endblock %}
+
+  {% block body %}
+    <div class="container">
+    <form  method="POST" action=''>
+          {% csrf_token %}
+          {{ forms.as_p }}
+          <!-- {{ form.as_p }} -->
+      {% for field in form %}
+
+
+      {{ field.label_tag }}
+          <div class="form-control">
+
+               {{ field }}
+          </div>
+      {% endfor %}
+          <button type="submit">Submit</button>
+
+      </form>
+    </div>
+  {% endblock %}
+  <div class="col-sm-10">
+        <input class="form-control" type="text" id="formGroupInputSmall" placeholder="Small input">
+      </div>

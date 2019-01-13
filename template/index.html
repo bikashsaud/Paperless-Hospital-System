@@ -1,0 +1,50 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h1>Hospital Management System</h1><br>
+								<h2>Internship Project</h2>
+			        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div>
+				<div class="home">
+
+
+
+					<form class="example" action="" style="margin:auto;max-width:300px">
+						<input type="text" placeholder="Search.." name="search2">
+						<button type="submit"><i class="fa fa-search"></i></button>
+					</form>
+					<div class="container">
+						<div class="">
+
+							{% if com %}
+							{% for f in com %}
+							<h5>Name:{{f.name}}</h5>
+							<h6>Email:{{f.email}}</h6>
+							<h6>Phone No.:{{f.phoneno}}</h6>
+							<h6>Comment:{{f.comment}}</h6>
+							<br>
+							{% endfor %}
+							{% endif%}
+
+	{% if form %}
+						</div>
+						<form method="post">
+							{{form}}
+							{% csrf_token %}
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+
+		{% endif %}
+					</div>
+	 		</div>
+				</div>
+	 {% endblock %}

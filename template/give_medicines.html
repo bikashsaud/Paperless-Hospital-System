@@ -1,0 +1,51 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+                <!-- <img src="{{form.image.url}}" alt=""> -->
+								<h2 style=" text-transform: uppercase;">{{form.name}}</h2>
+			        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div>
+<div class="row"  style="background-color:#EAE78C; padding:50px 0 0 0;">
+<div class=" container">
+  <div class="col-md-7 thumbnail" style="height:700px;">
+
+			<form class="" action="" method="post">
+				<h3>Patient Info></h3>
+			<li style="padding:10px;">ID:{{form.id}}</li>
+			<li style="padding:10px;">Name:{{form.name}}</li>
+			<li style="padding:10px;">Age:{{form.age}}</li>
+			<li style="padding:10px;">Phone No.:{{form.phoneno}}</li>
+			<li style="padding:10px;">Address:{{form.address}}</li>
+			<li style="padding:10px;">Date:{{form.date}}</li>
+			<li style="padding:10px;">About:{{form.about}}</li>
+
+			<h3>Recommended Medicines</h3>
+			<li style="padding:10px;">ID:{{lform.id}}</li>
+			<li style="padding:10px;">M_Name:{{lform.medicine_name}}</li>
+			<li style="padding:10px;">comment:{{lform.comment}}</li>
+      <li style="padding:10px;">doctor:{{lform.doctor}}</li>
+      <li style="padding:10px;">patient:{{lform.patient}}</li>
+			</form>
+		</div>
+		<div class="md-col-5 thumbnail" style="height:700px;" >
+			<h3>Medicines Lists</h3>
+			<form class="" action="" method="post">
+				{% csrf_token%}
+					{{mform.as_p}}
+					<input type="submit" name="" value="Submit">
+			</form>
+
+		</div>
+  </div>
+</div>
+
+{% endblock %}

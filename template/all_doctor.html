@@ -1,0 +1,81 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+			{% block body %}
+			<div class="main" role="main">
+			  <!-- Page Heading -->
+			  <section class="page-heading">
+			    <div class="container">
+			      <div class="row">
+			        <div class="col-md-12">
+			          <h1>All Doctor List</h1><br>
+											        </div>
+			      </div>
+			    </div>
+			  </section>
+			  </div><br>
+<div class="">
+
+  <div class="">
+    <!-- <h3>New Added Doctor</h3> -->
+    <div class="row ">
+      <div class="container">
+        <table class="table table-dark">
+          <thead>
+
+            <tr>
+                  {% autoescape on %}
+              <th scope="col">Uid</th>
+              <th scope="col">id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Date</th>
+              <th scope="col">Phone no.</th>
+              <th scope="col">T. Address</th>
+              <th scope="col">P. Address</th>
+              <th scope="col">Sex</th>
+              <th scope="col">Age</th>
+              <th scope="col">Specialist</th>
+              <th scope="col">Website</th>
+              <th scope="col">Degree</th>
+              <th scope="col">University</th>
+              <th scope="col">Actions</th>
+
+          <!-- phoneno, p_address,t_address,sex, age, specialist, portfolio, degree, university,experience,join_date -->
+              <!-- <th scope="col">{{user.email}}</th> -->
+                {% endautoescape %}
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for f,g in doctor %}
+
+             <tr>
+               <td>{{g.id}}</td>
+               <td>{{f.id}}</td>
+               <td>{{g.name}}</td>
+               <td>{{g.email}}</td>
+               <td>{{f.join_date}}</td>
+               <td>{{f.phoneno}}</td>
+               <td>{{f.t_address}}</td>
+               <td>{{f.p_address}}</td>
+               <td>{{f.sex}}</td>
+               <td>{{f.age}}</td>
+               <td>{{f.specialist}}</td>
+               <td>{{f.portfolio}}</td>
+               <td>{{f.degree}}</td>
+               <td>{{f.university}}</td>
+               <td>
+                 <a href="#"><i class="fa fa-edit fa-1x"></i></a>
+                 <a href="{% url 'delete_doctor' g.id %}"><i class="fa fa-trash"></i></a>
+                <a href="{% url 'view_doctor' g.id %}"><i class="fa fa-eye"></i></a>
+               </td>
+
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+</div>
+
+
+{% endblock %}
