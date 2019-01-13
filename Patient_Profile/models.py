@@ -30,7 +30,7 @@ class D_Medical(models.Model):
     medicine_name=models.TextField(default='0')
     comment=models.TextField(default='0')
     follow_on_date=models.DateField(timezone.now(),null=True)
-    date=models.DateField(default=timezone.now())
+    date=models.DateTimeField(timezone.now(),blank=False)
     is_purchased=models.BooleanField(default=False,)
     patient=models.ForeignKey(Patient)
     doctor=models.ForeignKey(doctor)

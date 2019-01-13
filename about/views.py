@@ -218,8 +218,15 @@ def patient_register(request):
 def treatment(request,id):
     if request.user.is_authenticated():
         form=Patient.objects.get(id=id)
-        form1=D_Medical.objects.filter(patient_id=id).order_by('date').reverse()
+        form1=D_Medical.objects.filter(patient_id=id).order_by('-date')
         form2=D_MedicalForm(request.POST or None)
+        profile=mydoctor.objects.get(user=request.user.id)
+        if form2.is_valid():
+            abc=form2.save(commit=False)
+            abc.doctor_id=profile.id
+            abc.patient_id=id
+            form2.save()
+            return redirect("doctordb")
         context={"form":form,'form1':form1,"form2":form2,}
         return render(request,'treatment.html',context)
     else:
