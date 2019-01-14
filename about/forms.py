@@ -33,7 +33,7 @@ class MedicalForm(forms.ModelForm):
 	"""docstring for medicalform."""
 	class Meta:
 		model=medical
-		fields="__all__"
+		exclude=["user","temporary_address","join_date",]
 
 	# def __init__(self, arg):
 	# 	super(medicalform, self).__init__()

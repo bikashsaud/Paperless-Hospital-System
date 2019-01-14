@@ -32,6 +32,7 @@ class D_Medical(models.Model):
     follow_on_date=models.DateField(timezone.now(),null=True)
     date=models.DateTimeField(timezone.now(),blank=False)
     is_purchased=models.BooleanField(default=False,)
+    amount=models.IntegerField(default=0.0)
     patient=models.ForeignKey(Patient)
     doctor=models.ForeignKey(doctor)
 

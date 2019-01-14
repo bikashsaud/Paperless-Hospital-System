@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from .import views
 from django.http import HttpResponse
@@ -34,15 +35,11 @@ def staffdb(request):
         con={"form":form,}
         return render(request,"staffdb.html",con)
     # return render(request,"staffdb.html")
-def medical(request):
-    return render(request,'medicaldb.html')
-def lab(request):
-    return render(request,"labdb.html")
 
-def doctordb(request):
-    if request.user.is_authenticated():
-        query=Patient.objects.all()[:3]
-        # ins=mydoctor.objects.get(user_id=request.user.id)
+def labdb(request):
+    if request.user.is_lab:
+        query=Patient.objects.all()[:5]
+        ins1=mymedical.objects.get(user_id=request.user.id)
         question=request.GET.get("q")
         if question:
             query=Patient.objects.all()
@@ -50,15 +47,39 @@ def doctordb(request):
             Q(name__icontains=question)
             ).distinct() #use name__iexact when exact value is required
         context={"query":query,}
-        if request.user.is_doctor:
-            return render(request,'doctordb.html',context)
-        elif request.user.is_medical:
-            return render(request,'medicaldb.html',context)
-        elif request.user.is_lab:
-            return render(request,'labdb.html',context)
+        return render(request,'labdb.html',context)
     else:
-        return render(request,'login')
-#
+        return render(request,'login.html')
+
+def medicaldb(request):
+    if request.user.is_medical:
+        query=Patient.objects.all()[:5]
+        ins1=mymedical.objects.get(user_id=request.user.id)
+        question=request.GET.get("q")
+        if question:
+            query=Patient.objects.all()
+            query=query.filter(
+            Q(name__icontains=question)
+            ).distinct() #use name__iexact when exact value is required
+        context={"query":query,}
+        return render(request,'medicaldb.html',context)
+    else:
+        return render(request,'login.html')
+def doctordb(request):
+    if request.user.is_doctor:
+        query=Patient.objects.all()[:3]
+        ins=mydoctor.objects.get(user_id=request.user.id)
+        question=request.GET.get("q")
+        if question:
+            query=Patient.objects.all()
+            query=query.filter(
+            Q(name__icontains=question)
+            ).distinct() #use name__iexact when exact value is required
+        context={"query":query,"ins":ins,}
+        return render(request,'doctordb.html',context)
+    else:
+        return render(request,'login.html')
+
 # @login_required
 def adminsdb(request):
     if request.user.is_admin:
@@ -66,12 +87,9 @@ def adminsdb(request):
 
         # qu=UserProfile.objects.filter(is_doctor=True)
         query_set=mydoctor.objects.all()[:5]
-
         query_set1=Staff.objects.all()[:6]
         # qu1=UserProfile.objects.filter(is_staff=True)
-
         ins=mysuperadmin.objects.get(user=request.user.id)
-
         question=request.GET.get("q")
         if question:
             query=UserProfile.objects.all()
@@ -101,10 +119,10 @@ def editadminprofile(request):
     return render(request,'editadmin.html',context)
 
 @login_required()
-def editdoctorprofile(request):
+def editdoctorprofile(request,id):
 # if request.user.is_doctor:
-    users=UserProfile.objects.get(id=request.user.id)
-    doct=mydoctor.objects.get(user=users.id)
+    users=UserProfile.objects.get(id=id)
+    doct=mydoctor.objects.get(id=id)
     form=DoctorForm(request.POST or None ,instance=doct)
     forms=DoctorUpdateForm(request.POST or None,instance=users)
     if form.is_valid() and forms.is_valid():
@@ -117,6 +135,43 @@ def editdoctorprofile(request):
             'doct':doct, #to show image in profile
          }
     return render(request,'editdoctor.html',context)
+
+# @login_required()
+def editmedicalprofile(request):
+    if request.user.is_medical:
+        f1=request.user.id
+        # print(f1)
+        doct=mymedical.objects.get(user=f1)
+        # print(doct)
+        f2=doct.user
+        # print(f2)
+        form=MedicalForm(request.POST or None)
+        # forms=DoctorUpdateForm(request.POST or None, instance=f2)
+        if form.is_valid():
+            form.save()
+            # forms.save()
+            return redirect('medicaldb')
+        context= {'form':form,
+                # 'forms':forms,
+                }
+        return render(request,'editmedical.html',context)
+    else:
+        return redirect('login')
+    #
+    #
+    # users=UserProfile.objects.get(id=request.user.id)
+    # doct=mymedical.objects.get(user=users.id)
+    # form=MedicalForm(request.POST or None, instance=doct)
+    # forms=DoctorUpdateForm(request.POST or None, instance=users)
+    # if form.is_valid() and forms.is_valid():
+    #     form.save()
+    #     forms.save()
+    #     return redirect('medicaldb')
+    # context= {'form':form,
+    #         'forms':forms,
+    #         }
+    # return render(request,'editmedical.html',context)
+    #
 
 def editlab(request):
     pass
@@ -225,7 +280,7 @@ def treatment(request,id):
             abc.doctor_id=profile.id
             abc.patient_id=id
             form2.save()
-            return redirect("doctordb")
+            return redirect("treatment",id=id)
         context={"form":form,'form1':form1,"form2":form2,}
         return render(request,'treatment.html',context)
     else:
@@ -265,17 +320,34 @@ def give_medicines(request,id):
         lform=D_Medical.objects.filter(patient_id=id).order_by('-date')
         mform=D_MedicalForm(request.POST or None)
         # user=UserProfile.objects.get(id=request.user.id)# profile=mymedical.objects.get(user=request.user.id)# mform=MedicineForm(request.POST or None)
-        if mform.is_valid():
+        # print("sdlkhfaaaaaaaaaaaaadsklhffffffff")
+        if request.POST.get('id') is not None:
+            a = D_Medical.objects.get(id=request.POST.get('id'))
+            a.is_purchased = True
+            a.amount=request.POST.get("amount")
+            a.save()
             # abc=mform.save(commit=False)# abc.patient_id=id # abc.medical_id=profile.id
-            mform.save()
-            return redirect("doctordb")
+            #mform.save()
+            return redirect("give_medicines",id=id)
         context={   "form":form,
                     "lform":lform,
                     "mform":mform,
+
                     }
         return render(request,'give_medicines.html',context)
     else:
         return redirect("login")
+
+def bill(request,id):
+    if request.user.is_medical:
+        form1=Patient.objects.filter(id=id)
+        form2=D_Medical.objects.filter(patient_id=id)
+        context={'form1':form1,
+                    'form2':form2,}
+        return render(request,'bill.html',context)
+    else:
+        return redirect("login")
+
 
 
 def Test_result(request,id):

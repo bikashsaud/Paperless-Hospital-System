@@ -74,12 +74,11 @@ def login_(request,*args,**kwargs):
         elif request.user.is_staff:
             return redirect('staffdb')
         elif request.user.is_medical:
-            return redirect('doctordb')
+            return redirect('medicaldb')
         elif request.user.is_lab:
-            return redirect('doctordb')
+            return redirect('labdb')
         elif request.user.is_doctor:
             id=request.user.id
-            print(id)
             return redirect('doctordb')
         else:
             return redirect("login")

@@ -9,8 +9,8 @@ from django.contrib.auth.views import login,logout, password_reset, password_res
 
 urlpatterns=[
 url(r'^staffdb/',views.staffdb,name='staffdb'),
-# url(r'^medical/',views.doctordb,name='doctordb'),
-# url(r'^lab/',views.doctordb,name='doctordb'),
+url(r'^medical/',views.medicaldb,name='medicaldb'),
+url(r'^lab/',views.labdb,name='labdb'),
 url(r'^doctor/',views.doctordb,name='doctordb'),
 url(r'^adminsdb/',views.adminsdb,name='adminsdb'),
 url(r'^editadminprofile/',views.editadminprofile,name='editadminprofile'),
@@ -22,7 +22,8 @@ url(r'^showdoctorprofile/',views.show_profile,name='show_profile'),
 # url(r'^edit_profile/$',views.edit_profile,name="edit_profile"),
 url(r'^showadminprofile/',views.show_adminprofile,name='show_adminprofile'),
 
-url(r'^doctoredit/',views.editdoctorprofile,name='editdoctorprofile'),
+url(r'^doctoredit/(?P<id>[0-9]+)/$',views.editdoctorprofile,name='editdoctorprofile'),
+url(r'^medicaledit/',views.editmedicalprofile,name='editmedicalprofile'),
 
 
 url(r'^staff_list/(?P<id>[0-9]+)/$',views.delete_staff,name="delete_staff"),
@@ -32,8 +33,8 @@ url(r'^all_doctors/(?P<id>[0-9]+)/$',views.delete_doctor,name="delete_doctor"),
 
 url(r'^patient_register/', views.patient_register, name='patient_register'),
 # url(r'^patient_list/', views.patient_list, name='patient_list'),
-url(r'^treatment/(?P<id>[0-9]+)/',views.treatment,name="treatment"),
-url(r'^medicine/(?P<id>[0-9]+)/$',views.medicine,name="medicine"),
+url(r'^treatment/(?P<id>[0-9]+)/$',views.treatment,name="treatment"),
+url(r'^medicine/(?P<id>[0-9]+)/',views.medicine,name="medicine"),
 url(r'^give_medicines/(?P<id>[0-9]+)/$',views.give_medicines,name="give_medicines"),#to give medicine by medical to patient
 
 url(r'^tests/$',views.tests,name="tests"), #to set lab test by all_doctors
@@ -50,6 +51,6 @@ url(r'^patient_list/$', views.patient_list, name='patient_list'),
 url(r'^pdfview/$', views.pdf, name='pdf'),
 url(r'^pdfgenerate/$', views.gpdf, name='gpdf'),
 
-
+url(r'^bill/(?P<id>[0-9]+)/$', views.bill, name='billing'),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

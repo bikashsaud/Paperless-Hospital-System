@@ -1,0 +1,38 @@
+{% extends 'master/base.html' %}
+{% load widget_tweaks %}
+     {% block body %}
+     <div class="main" role="main">
+       <!-- Page Heading -->
+       <section class="page-heading">
+         <div class="container">
+           <div class="row">
+             <div class="col-md-12">
+               <!-- <img src="{{form.image.url}}" alt=""> -->
+               <h1>Billing Form</h1>
+               <h2 style=" text-transform: uppercase;">{{form1.name}}</h2>
+             </div>
+           </div>
+         </div>
+       </section>
+       </div>
+<div class="row"  style="background-color:#EAE78C; padding:50px 0 0 0;">
+<div class=" container">
+ <div class="col-md-4 thumbnail" style="height:700px;">
+<h5>
+          {% for f in form1 %}
+            Patient Name:&nbsp&nbsp{{f.name}}<br>
+            Patient ID:&nbsp&nbsp{{f.id}}<br>
+            Address:&nbsp&nbsp{{f.address}}<br>
+            Sex:&nbsp&nbsp{{f.sex}}<br>
+            Phone No.: &nbsp&nbsp{{f.phoneno}}<br>
+
+          {% endfor %}
+            Medicine_Name<br>
+          {% for f in form2 %}
+           :&nbsp&nbsp{{f.medicine_name}}<br>
+          {% endfor %}
+          Total Amount:950
+</h5>
+
+   </div>
+{% endblock %}

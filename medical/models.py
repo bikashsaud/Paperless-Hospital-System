@@ -16,7 +16,7 @@ class medical(models.Model):
     sex=models.CharField(max_length=2,choices=sex,default='M')
     age=models.IntegerField(default=0)
     post=models.CharField(max_length=30)
-    image=models.FileField(upload_to='profilepicture')
+    image=models.ImageField(upload_to='profilepicture')
     Portfolio = models.URLField(default=0)
     join_date=models.DateField(timezone.now(),null=True)
     user=models.OneToOneField(UserProfile,null=True,on_delete=models.CASCADE)

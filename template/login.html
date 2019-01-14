@@ -47,8 +47,8 @@
         <form  method="POST">
           {% csrf_token %}
           <!-- {{ form.non_field_errors }} -->
-
           {% for field in form %}
+          
           {{field.label_tag}}
           <div class="input-group">
             {{field|add_class:'form-control'}}

@@ -52,38 +52,59 @@
 											<th scope="col">Comment</th>
 											<th scope="col">Follow On Date</th>
 											<th scope="col">Is_Purchased</th>
+											<th scope="col">Amount</th>
 											<th scope="col">save</th>
-
 										</tr>
 										{% for i in lform %}
-
+										<form class="" action="#" method="post">
+											<input type="hidden" name="id" value="{{i.id}}">
 											<tr>
 												<td>{{i.id}}</td>
 												<td>{{i.patient.name}}</td>
 												<td>{{i.date}}</td>
 												<td>{{i.medicine_name}}</td>
 												<td>{{i.comment}}</td>
+
 												<td>{{i.follow_on_date}}</td>
-										<form class="" action="#" method="post">
+													{% csrf_token %}
 
-											<td>{{mform.is_purchased}}</td>
-											<td><button type="submit" name="button" value="Save" class="btn btn-primary">Save</button></td>
-										</form>
+
+											<td>
+												{% if i.is_purchased%}
+												    <input type="checkbox" name="is_purchased" checked>
+												{% else %}
+													<input type="checkbox" name="is_purchased" value="">
+												 {% endif %}
+											</td>
+
+											<td style="color:black;">
+												{% if i.is_purchased == False %}
+												<input type="text" name="amount" value="" >
+												{% endif%}
+											</td>
+
+											<!-- <td>{{mform.id}}</td> -->
+											<td>
+												<button type="submit" name="button" value="Save" class="btn btn-primary">Save</button>
+											</td>
 											</tr>
-
-
+											</form>
 										{% endfor %}
-
 									</thead>
 									<tbody>
 									</tbody>
 								</table>
 							</div>
 						</div>
+
+						<div class="">
+							<button type="button" name="button" class='btn btn-sucess'><a href="{% url 'billing' form.id %}">Bill</a></button>
+
+						</div>
+
+
 					</div>
-
-
-  		</div>
-</div>
+  			</div>
+			</div>
 
 {% endblock %}
