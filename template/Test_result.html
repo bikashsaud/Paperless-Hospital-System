@@ -14,33 +14,78 @@
 			    </div>
 			  </section>
 			  </div>
-<div class="row"  style="background-color:#EAE78C; padding:50px 0 0 0;">
+
+
+<div class="row">
 <div class=" container">
-  <div class="col-md-7 thumbnail" style="height:700px;">
 
-			<form class="" action="" method="post">
-				<h3>Patient Info></h3>
-			<li style="padding:10px;">ID:{{form.id}}</li>
-			<li style="padding:10px;">Name:{{form.name}}</li>
-			<li style="padding:10px;">Age:{{form.age}}</li>
-			<li style="padding:10px;">Phone No.:{{form.phoneno}}</li>
-			<li style="padding:10px;">Address:{{form.address}}</li>
-			<li style="padding:10px;">Date:{{form.date}}</li>
-			<li style="padding:10px;">About:{{form.about}}</li>
+	  <div class="col-md-12 thumbnail" style="padding:20px 0 0 300px;">
+					<h3>Patient Info></h3>
+				<li style="padding:10px;">ID:{{form.id}}</li>
+				<li style="padding:10px;">Name:{{form.name}}</li>
+				<li style="padding:10px;">Age:{{form.age}}</li>
+				<li style="padding:10px;">Phone No.:{{form.phoneno}}</li>
+				<li style="padding:10px;">Address:{{form.address}}</li>
+				<li style="padding:10px;">Date:{{form.date}}</li>
+				<li style="padding:10px;">About:{{form.about}}</li>
+			</div>
 
-			<h3>Recommended tests</h3>
-			<li style="padding:10px;">ID:{{lform.id}}</li>
-			<li style="padding:10px;">Tests:{{lform.test_list}}</li>
-			<li style="padding:10px;">comment:{{lform.comment}}</li>
-      <li style="padding:10px;">doctor:{{lform.doctor}}</li>
-      <li style="padding:10px;">patient:{{lform.patient}}</li>
-			</form>
-		</div>
-		<div class="md-col-5 thumbnail" style="height:700px;" >
-			<h3>test Lists</h3>
-			{{mform.as_p}}
-		</div>
-  </div>
-</div>
+	<div class="container">
+
+
+		<div class="md-col-12 thumbnail">
+			<h2>Test Result......</h2>
+
+										<table class="table table-dark">
+											<thead>
+												<tr>
+													<th scope="col">Test_id</th>
+													<th scope="col">Date</th>
+													<th scope="col">Test Name</th>
+													<th scope="col">Comment</th>
+													<th scope="col">Amount</th>
+													<th scope="col">Is_Sampled</th>
+													<th scope="col">Result</th>
+													<th scope="col">Save</th>
+												</tr>
+												</thead>
+
+
+												<tbody>
+													<form class="" action="" method="post">
+													{% for i in lform %}
+													<input type="hidden" name="id" value="{{i.id}}">
+												<tr>
+													{%csrf_token%}
+													<td>{{i.id}}</td>
+													<td>{{i.date}}</td>
+													<td>{{i.test_list}}</td>
+													<td>{{i.comment}}</td>
+													
+													<td  style="color:black;">
+															<input type="integer" name="amount" value="{{i.amount}}">
+													</td>
+
+													<td>
+															{% if i.is_sampled%}
+																	<input type="checkbox" name="is_sampled" checked>
+															{% else %}
+																<input type="checkbox" name="is_sampled" value="">
+															{% endif %}
+													</td>
+													<td  style="color:black;">
+														<input type="text" name="result" value="{{i.result}}">
+													</td>
+													<td>
+														<button type="submit" name="button" value="Save" class="btn btn-primary">Save</button>
+													</td>
+
+												</tr>
+												{% endfor %}
+											</form>
+										</tbody>
+									</table>
+								</div>
+							</div>
 
 {% endblock %}

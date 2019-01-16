@@ -34,10 +34,10 @@ url(r'^all_doctors/(?P<id>[0-9]+)/$',views.delete_doctor,name="delete_doctor"),
 url(r'^patient_register/', views.patient_register, name='patient_register'),
 # url(r'^patient_list/', views.patient_list, name='patient_list'),
 url(r'^treatment/(?P<id>[0-9]+)/$',views.treatment,name="treatment"),
-url(r'^medicine/(?P<id>[0-9]+)/',views.medicine,name="medicine"),
+# url(r'^medicine/(?P<id>[0-9]+)/',views.medicine,name="medicine"),
 url(r'^give_medicines/(?P<id>[0-9]+)/$',views.give_medicines,name="give_medicines"),#to give medicine by medical to patient
 
-url(r'^tests/$',views.tests,name="tests"), #to set lab test by all_doctors
+url(r'^tests/(?P<id>[0-9]+)/$',views.tests,name="tests"), #to set lab test by doctors
 url(r'^Test_result/(?P<id>[0-9]+)/$',views.Test_result,name="Test_result"),# to do testes of patients by LAB
 
 url(r'^view_doctor/(?P<id>[0-9]+)/$',views.view_doctor,name="view_doctor"),
@@ -48,9 +48,9 @@ url(r'^all_doctors/$', views.all_doctors, name='all_doctors'),
 url(r'^staff_list/$', views.staff_list, name='staff_list'),
 url(r'^patient_list/$', views.patient_list, name='patient_list'),
 
-url(r'^pdfview/$', views.pdf, name='pdf'),
+#to download in the pdf format
+# url(r'^pdfview/$', views.pdf, name='pdf'),
 url(r'^pdfgenerate/$', views.gpdf, name='gpdf'),
-
-url(r'^bill/(?P<id>[0-9]+)/$', views.bill, name='billing'),
+url(r'^bill/(?P<id>[0-9]+)/$', views.billing, name='billing'),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

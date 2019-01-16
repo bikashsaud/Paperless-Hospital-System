@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import StaffForm,MedicalForm,LabForm,DoctorForm,AdminForm,DoctorUpdateForm,EditProfileForm,EditAProfileForm,PatientForm,D_MedicalForm,D_LabForm,MedicineForm,Test_resultForm
 from doctor.models import doctor as mydoctor
 from lab.models import lab
-from Patient_Profile.models import Patient,D_Medical
+from Patient_Profile.models import Patient,D_Medical,D_Lab
 from medical.models import medical as mymedical
 from staff.models import Staff
 from superadmin.models import superadmin as mysuperadmin
@@ -39,7 +39,7 @@ def staffdb(request):
 def labdb(request):
     if request.user.is_lab:
         query=Patient.objects.all()[:5]
-        ins1=mymedical.objects.get(user_id=request.user.id)
+
         question=request.GET.get("q")
         if question:
             query=Patient.objects.all()
@@ -80,11 +80,10 @@ def doctordb(request):
     else:
         return render(request,'login.html')
 
-# @login_required
+@login_required
 def adminsdb(request):
     if request.user.is_admin:
         quer=Patient.objects.all()[:5]
-
         # qu=UserProfile.objects.filter(is_doctor=True)
         query_set=mydoctor.objects.all()[:5]
         query_set1=Staff.objects.all()[:6]
@@ -175,9 +174,6 @@ def editmedicalprofile(request):
 
 def editlab(request):
     pass
-    # if request.user.is_lab:
-    #     form=LabForm(request.POST or None,)
-
 
 def profilepicture(request):
     form = UploadFileForm(request.POST, request.FILES)
@@ -192,7 +188,7 @@ def profilepicture(request):
 def show_profile(request):
     if request.user.is_doctor:
         return render(request,'show_doctorprofile.html')
-    else:
+
         return HttpResponse('<h1>NOT FOUND PAGE</h1>')
 
 @login_required()
@@ -202,7 +198,7 @@ def show_adminprofile(request):
         con={'con':ins,}
         return render(request,'show_adminprofile.html',con)
     else:
-        return HttpResponse('<h1>NOT FOUND PAGE</h1>')
+        return HttpResponse('<h1>PAGE NOT FOUND </h1>')
 
 
 def all_doctors(request):
@@ -269,58 +265,66 @@ def patient_register(request):
 
 
 
-def treatment(request,id):
-    if request.user.is_authenticated():
+def treatment(request,id):      #showing lists of medicine and test with adding medicine in same page
+    if request.user.is_doctor:
         form=Patient.objects.get(id=id)
         form1=D_Medical.objects.filter(patient_id=id).order_by('-date')
+        form3=D_Lab.objects.filter(patient_id=id).order_by('-date')
         form2=D_MedicalForm(request.POST or None)
         profile=mydoctor.objects.get(user=request.user.id)
         if form2.is_valid():
             abc=form2.save(commit=False)
             abc.doctor_id=profile.id
             abc.patient_id=id
-            form2.save()
+            abc.save()
             return redirect("treatment",id=id)
-        context={"form":form,'form1':form1,"form2":form2,}
+        context={"form":form,'form1':form1,"form2":form2,"form3":form3,}
         return render(request,'treatment.html',context)
     else:
         return redirect("login")
+#
+# def medicine(request,id):   #to add Medicine in BY DOCTOR#### BUT not required now we add medicine through TREATMENT PAGE
+#     if request.user.is_authenticated():
+#         mform=D_MedicalForm(request.POST or None)
+#         # patient=Patient.objects.get(id=id)
+#         # user=UserProfile.objects.get(id=request.user.id)
+#         profile=mydoctor.objects.get(user=request.user.id)
+#         print(id)
+#         if mform.is_valid():
+#             abc=mform.save(commit=False)
+#             abc.doctor_id=profile.id
+#             abc.patient_id=id
+#             abc.save()
+#             return redirect("doctordb")
+#         context={"mform":mform,'id':id,}
+#         return render(request,'medicines.html',context)
 
-def medicine(request,id):
-    if request.user.is_authenticated():
-        mform=D_MedicalForm(request.POST or None)
-        # patient=Patient.objects.get(id=id)
-        # user=UserProfile.objects.get(id=request.user.id)
-        profile=mydoctor.objects.get(user=request.user.id)
-        if mform.is_valid():
-            abc=mform.save(commit=False)
-            abc.doctor_id=profile.id
-            abc.patient_id=id
-            mform.save()
-            return redirect("doctordb")
-        context={"mform":mform,'id':id,}
-        return render(request,'medicines.html',context)
+#to add tests by doctor in D_Lab tests
 
-def tests(request):
-    if request.user.is_authenticated():
-        mform=D_LabForm(request.POST or None)
+def tests(request,id):  #to add TEST BY DOCTOR
+    if request.user.is_doctor:
+        form=Patient.objects.get(id=id)
+        form1=D_Lab.objects.filter(patient_id=id).order_by('-date')
+        form3=D_Medical.objects.filter(patient_id=id).order_by('-date')
+        form2=D_LabForm(request.POST or None)
+
         profile=mydoctor.objects.get(user=request.user.id)
-        if mform.is_valid():
-            abc=mform.save(commit=False)
+        if form2.is_valid():
+            abc=form2.save(commit=False)
             abc.doctor_id=profile.id
             abc.patient_id=id
             abc.save()
-            return redirect("doctordb")
-        context={"mform":mform,}
+            return redirect("tests",id=id)
+        context={"form":form,'form1':form1,"form2":form2,"form3":form3,}
         return render(request,'tests.html',context)
+    else:
+        return redirect("login")
 
-def give_medicines(request,id):
+def give_medicines(request,id): #give medicine by medical
     if request.user.is_authenticated():
         form=Patient.objects.get(id=id)
-        lform=D_Medical.objects.filter(patient_id=id).order_by('-date')
-        mform=D_MedicalForm(request.POST or None)
+        lform=D_Medical.objects.filter(patient_id=id).filter(is_purchased=False).order_by('-date')
         # user=UserProfile.objects.get(id=request.user.id)# profile=mymedical.objects.get(user=request.user.id)# mform=MedicineForm(request.POST or None)
-        # print("sdlkhfaaaaaaaaaaaaadsklhffffffff")
         if request.POST.get('id') is not None:
             a = D_Medical.objects.get(id=request.POST.get('id'))
             a.is_purchased = True
@@ -328,12 +332,10 @@ def give_medicines(request,id):
             a.save()
             # abc=mform.save(commit=False)# abc.patient_id=id # abc.medical_id=profile.id
             #mform.save()
-            return redirect("give_medicines",id=id)
+            return redirect("give_medicines",id=id,)
         context={   "form":form,
                     "lform":lform,
-                    "mform":mform,
-
-                    }
+                }
         return render(request,'give_medicines.html',context)
     else:
         return redirect("login")
@@ -345,37 +347,32 @@ def bill(request,id):
         context={'form1':form1,
                     'form2':form2,}
         return render(request,'bill.html',context)
+        pdf = render_to_pdf('pdf.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
     else:
         return redirect("login")
 
+#this is not now used Acually its is to add TEST result by lab person but this is not now used
 
-
-def Test_result(request,id):
+def Test_result(request,id): #give test result by lab
     if request.user.is_authenticated():
         form=Patient.objects.get(id=id)
-        lform=D_Lab.objects.latest("id")
-        mform=Test_resultForm(request.POST or None)
-        if mform.is_valid():
-            mform.save()
-            return redirect('labdb')
-        context={"form":form,
+        lform=D_Lab.objects.filter(patient_id=id).order_by('-date')
+        mform=D_LabForm(request.POST or None)
+        if request.POST.get('id') is not None:
+            a = D_Lab.objects.get(id=request.POST.get('id'))
+            a.is_sampled = True
+            a.result=request.POST.get("result")
+            a.amount=request.POST.get("amount")
+            a.save()
+            return redirect('Test_result',id=id)
+        context={
+                    "form":form,
                     "lform":lform,
-                    "mform":mform,
-                    }
+                }
         return render(request,'Test_result.html',context)
     else:
         return redirect("login")
-
-
-def Test_result(request):
-    if request.user.is_authenticated():
-        form=Test_resultForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect("medicaldb")
-        con={"form":form,}
-        return render(request,'Test_result.html',con)
-
 
 def patientview_profile(request,id):
     if request.user.is_authenticated():
@@ -396,26 +393,26 @@ def sview_profile(request,id):
 # =================================
 # pdf downloadable FILES
 # =================================
-
-
-def pdf(request):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    return FileResponse(buffer)
- #created in step 4
+#
+#
+# def pdf(request):
+#     # Create a file-like buffer to receive PDF data.
+#     buffer = io.BytesIO()
+#     # Create the PDF object, using the buffer as its "file."
+#     p = canvas.Canvas(buffer)
+#
+#     # Draw things on the PDF. Here's where the PDF generation happens.
+#     # See the ReportLab documentation for the full list of functionality.
+#     p.drawString(100, 100, "Hello world.")
+#
+#     # Close the PDF object cleanly, and we're done.
+#     p.showPage()
+#     p.save()
+#
+#     # FileResponse sets the Content-Disposition header so that browsers
+#     # present the option to save the file.
+#     return FileResponse(buffer)
+#  #created in step 4
 
 def gpdf(request, *args, **kwargs):
     data = {
@@ -426,3 +423,15 @@ def gpdf(request, *args, **kwargs):
     }
     pdf = render_to_pdf('pdf.html', data)
     return HttpResponse(pdf, content_type='application/pdf')
+
+
+def billing(request,id):            #to download bill
+    if request.user.is_authenticated:
+        form1=Patient.objects.filter(id=id)
+        form2=D_Medical.objects.filter(patient_id=id)
+        context={'form1':form1,
+                        'form2':form2,}
+        pdf = render_to_pdf('billing.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
+    else:
+        return redirect("login")

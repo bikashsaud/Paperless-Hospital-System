@@ -64,29 +64,24 @@
 												<td>{{i.date}}</td>
 												<td>{{i.medicine_name}}</td>
 												<td>{{i.comment}}</td>
-
 												<td>{{i.follow_on_date}}</td>
 													{% csrf_token %}
+												<td>
+													{% if i.is_purchased%}
+													    <input type="checkbox" name="is_purchased" checked>
+													{% else %}
+														<input type="checkbox" name="is_purchased" value="">
+													 {% endif %}
+												</td>
 
-
-											<td>
-												{% if i.is_purchased%}
-												    <input type="checkbox" name="is_purchased" checked>
-												{% else %}
-													<input type="checkbox" name="is_purchased" value="">
-												 {% endif %}
-											</td>
-
-											<td style="color:black;">
-												{% if i.is_purchased == False %}
-												<input type="text" name="amount" value="" >
-												{% endif%}
-											</td>
+												<td style="color:black;">													
+													<input type="text" name="amount" value="{{i.amount}}" >
+												</td>
 
 											<!-- <td>{{mform.id}}</td> -->
-											<td>
-												<button type="submit" name="button" value="Save" class="btn btn-primary">Save</button>
-											</td>
+												<td>
+													<button type="submit" name="button" value="Save" class="btn btn-primary">Save</button>
+												</td>
 											</tr>
 											</form>
 										{% endfor %}
@@ -98,8 +93,8 @@
 						</div>
 
 						<div class="">
-							<button type="button" name="button" class='btn btn-sucess'><a href="{% url 'billing' form.id %}">Bill</a></button>
-
+							<a href="{% url 'billing' form.id %}"><button type="button" name="button" class='btn btn-primary' style="padding:0 300px; 0 200px;"><h5>Go To Billing</h5></button></a>
+					<br>TOTAL Amount:	{{total}}
 						</div>
 
 

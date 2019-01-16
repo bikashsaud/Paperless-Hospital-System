@@ -32,7 +32,7 @@ class D_Medical(models.Model):
     follow_on_date=models.DateField(timezone.now(),null=True)
     date=models.DateTimeField(timezone.now(),blank=False)
     is_purchased=models.BooleanField(default=False,)
-    amount=models.IntegerField(default=0.0)
+    amount=models.IntegerField(default='0', blank=True, null=True)
     patient=models.ForeignKey(Patient)
     doctor=models.ForeignKey(doctor)
 
@@ -43,7 +43,9 @@ class D_Lab(models.Model):
     test_list=models.TextField(default='0')
     comment=models.TextField(default='0')
     is_sampled=models.BooleanField(default=False)
-    result=models.CharField(max_length=100,default='Pending')
+    result=models.CharField(max_length=100,default='Pending',blank=True,null=True)
+    amount=models.IntegerField(default=0,null=True,blank=True)
+    date=models.DateField(timezone.now(),null=True)
     doctor=models.ForeignKey(doctor)
     patient=models.ForeignKey(Patient)
 
@@ -52,15 +54,14 @@ class D_Lab(models.Model):
 
 class Test_result(models.Model):
     test_name=models.CharField(max_length=200,default='0')
-
     test_date=models.DateField(timezone.now(),null=True,blank=True)
-
     lab=models.ForeignKey(lab)
     patient=models.ForeignKey(Patient)
     doctor=models.ForeignKey(doctor)
 
     def __str__(self):
         return self.patient.name
+
 
 class Medicine(models.Model):
     medicine_name=models.TextField(default='0')
