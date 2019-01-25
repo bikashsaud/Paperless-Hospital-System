@@ -16,10 +16,10 @@
 			  </div>
 <div class="row"  style="background-color:#EAE78C; padding:50px 0 0 0;">
 <div class=" container">
-  <div class="col-md-4 thumbnail" style="height:700px;">
+  <div class="col-md-3 thumbnail" style="height:700px;">
 
 			<form class="" action="" method="post">
-				<h3>Patient Info></h3>
+			<h3>Patient Info--></h3>
 				{% csrf_token %}
 			<li style="padding:10px;">ID:{{form.id}}</li>
 			<li style="padding:10px;">Name:{{form.name}}</li>
@@ -28,10 +28,9 @@
 			<li style="padding:10px;">Address:{{form.address}}</li>
 			<li style="padding:10px;">Date:{{form.date}}</li>
 			<li style="padding:10px;">About:{{form.about}}</li>
-
 		</div>
 
-		<div class="col-md-8">
+		<div class="col-md-9">
 
 
 					<div class="tab">
@@ -39,6 +38,43 @@
 
 					</div>
 
+					<div class="row ">
+						<div class="container">
+							<table class="table table-dark">
+								<thead>
+									<tr>
+										<th scope="col">id</th>
+										<th scope="col">Added Date</th>
+										<th scope="col">Medicine Name</th>
+										<th scope="col">Comment</th>
+										<th scope="col">Follow On Date</th>
+										<th scope="col">Is Purchased</th>
+										<th scope="col">Purchased Date</th>
+										<th scope="col">Amount</th>
+										<td scope="col">Medical::</td>
+									</tr>
+										{% for i in mform %}
+									<tr>
+										{% csrf_token %}
+										<td>{{i.id}}</td>
+										<td>{{i.date}}</td>
+										<td>{{i.medicine_name}}</td>
+										<td>{{i.comment}}</td>
+										<td>{{i.follow_on_date }}</td>
+										<td>{{i.is_purchased}}</td>
+										<td>{{i.p_date}}</td>
+										<td >{{i.amount }}</td>
+										<td style="color:red;">{{i.medical }}</td>
+									</tr>
+
+										{% endfor %}
+										<br><td style="">Total:{{total}}</td>
+
+								</thead>
+							</table>
+
+						</div>
+					</div>
 
 						<div class="row ">
 							<div class="container">
@@ -46,13 +82,15 @@
 									<thead>
 										<tr>
 											<th scope="col">id</th>
-											<th scope="col">Name</th>
-											<th scope="col">Date</th>
+
+											<th scope="col">Add Date</th>
 											<th scope="col">Medicine Name</th>
 											<th scope="col">Comment</th>
 											<th scope="col">Follow On Date</th>
-											<th scope="col">Is_Purchased</th>
+											<th scope="col">Purchase ?</th>
+											<th scope="col">Purchased Date</th>
 											<th scope="col">Amount</th>
+											<th scope="col">Medical</th>
 											<th scope="col">save</th>
 										</tr>
 										{% for i in lform %}
@@ -60,7 +98,6 @@
 											<input type="hidden" name="id" value="{{i.id}}">
 											<tr>
 												<td>{{i.id}}</td>
-												<td>{{i.patient.name}}</td>
 												<td>{{i.date}}</td>
 												<td>{{i.medicine_name}}</td>
 												<td>{{i.comment}}</td>
@@ -73,12 +110,17 @@
 														<input type="checkbox" name="is_purchased" value="">
 													 {% endif %}
 												</td>
+												<!-- <td>{{i.medicine_name}}</td> -->
 
-												<td style="color:black;">													
+												{% block contenido %}
+
+												{% endblock%}
+												<td style="color:black;">
+													<input type="text" name="date" value="{{i.p_date}}" >
+												</td>
+												<td style="color:black;">
 													<input type="text" name="amount" value="{{i.amount}}" >
 												</td>
-
-											<!-- <td>{{mform.id}}</td> -->
 												<td>
 													<button type="submit" name="button" value="Save" class="btn btn-primary">Save</button>
 												</td>
@@ -91,10 +133,10 @@
 								</table>
 							</div>
 						</div>
-
 						<div class="">
-							<a href="{% url 'billing' form.id %}"><button type="button" name="button" class='btn btn-primary' style="padding:0 300px; 0 200px;"><h5>Go To Billing</h5></button></a>
-					<br>TOTAL Amount:	{{total}}
+							<a href="{% url "bill" form.id %}"><button type="button" name="button" class='btn btn-primary' style="padding:0 300px; 0 200px;"><h5>Go To Billing</h5></button></a>
+					<br>
+
 						</div>
 
 

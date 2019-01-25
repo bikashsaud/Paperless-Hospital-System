@@ -48,7 +48,7 @@
           {% csrf_token %}
           <!-- {{ form.non_field_errors }} -->
           {% for field in form %}
-          
+
           {{field.label_tag}}
           <div class="input-group">
             {{field|add_class:'form-control'}}
@@ -56,15 +56,20 @@
           {% endfor %}
           <button type="submit" class="btn btn-primary">Login</button>
 
+
+
           {% if user.is_admin or user.is_staff or user.is_superuser %}
           <div class="forgot">
             <a href="{% url 'register' %}">Register User  </a>&nbsp&nbsp&nbsp
 
+<br>
+
             {% endif %}
 
             <a href="#">Forget Password?</a>
-
-
+<h3>--OR--</h3>
+            <a href="{% url 'social:begin' 'github' %}"><button type="button" name="button" class="btn btn-success">Login with GitHub</button></a>
+            <a href="{% url 'social:begin' 'google-oauth2' %}"><button type="button" name="button" class="btn btn-danger">Login with Google+</button></a><br>
 
 
           </div>

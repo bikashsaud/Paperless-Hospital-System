@@ -13,15 +13,12 @@ def index( request):
     if request.user.is_authenticated():
         com=Comment.objects.all()
         return render(request,'index.html',{"com":com, })
-
     else:
         form=CommentForm(request.POST or None)
         if form.is_valid():
             form.save()
             return redirect('index')
-
         con={"form":form,}
     return render(request,'index.html',con)
-
 def contact(request):
     return render(request,'contact.html')

@@ -51,6 +51,6 @@ url(r'^patient_list/$', views.patient_list, name='patient_list'),
 #to download in the pdf format
 # url(r'^pdfview/$', views.pdf, name='pdf'),
 url(r'^pdfgenerate/$', views.gpdf, name='gpdf'),
-url(r'^bill/(?P<id>[0-9]+)/$', views.billing, name='billing'),
-
+url(r'^DownloadBill/(?P<id>[0-9]+)/', views.DownloadBill, name='DownloadBill'),
+url(r'^bill/(?P<id>[0-9]+)/', views.bill, name='bill'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

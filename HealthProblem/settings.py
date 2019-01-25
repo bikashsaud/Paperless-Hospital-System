@@ -48,13 +48,28 @@ INSTALLED_APPS = [
     'ckeditor',
     'Patient_Profile',
     'crispy_forms',
-    'UserComment'
+    'UserComment',
+    'social_django',
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL='Account.UserProfile'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+
+
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +79,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'HealthProblem.urls'
@@ -79,13 +96,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
+
+
+
 WSGI_APPLICATION = 'HealthProblem.wsgi.application'
-login_redirect_url='register'
+
+# login_redirect_url='register'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -134,8 +158,20 @@ USE_L10N = True
 
 USE_TZ = True
 
-CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='676393579434-1vrfq33506aj41okpe0464nvgv2amdbc.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET='wt6G3Ib3PHWMZNLrSUAEgwHu'
+# CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+
+SOCIAL_AUTH_GITHUB_KEY = '1954766b696e62b69fa6'
+SOCIAL_AUTH_GITHUB_SECRET = 'd268754188d58a3925a0bb312a580e997935e66e'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY=''
+SOCIAL_AUTH_FACEBOOK_SECRET=''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 

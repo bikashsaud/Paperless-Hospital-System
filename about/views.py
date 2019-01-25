@@ -1,7 +1,11 @@
+
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import date
 from .import views
+
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm,PasswordChangeForm
 from django.contrib.auth import authenticate,login,logout
@@ -21,11 +25,9 @@ import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 
-
 from django.http import HttpResponse
 from django.views.generic import View
 from .utils import render_to_pdf
-
 
 # Create your views here.
 
@@ -200,7 +202,6 @@ def show_adminprofile(request):
     else:
         return HttpResponse('<h1>PAGE NOT FOUND </h1>')
 
-
 def all_doctors(request):
     if request.user.is_authenticated():
         doct=mydoctor.objects.all()
@@ -325,16 +326,27 @@ def give_medicines(request,id): #give medicine by medical
         form=Patient.objects.get(id=id)
         lform=D_Medical.objects.filter(patient_id=id).filter(is_purchased=False).order_by('-date')
         # user=UserProfile.objects.get(id=request.user.id)# profile=mymedical.objects.get(user=request.user.id)# mform=MedicineForm(request.POST or None)
+        f=D_Medical.objects.filter(patient_id=id).filter(is_purchased=True).filter(p_date=date.today())
+
+        total_price=sum(m.amount for m in f)
+
         if request.POST.get('id') is not None:
             a = D_Medical.objects.get(id=request.POST.get('id'))
             a.is_purchased = True
             a.amount=request.POST.get("amount")
+            list=[a.amount]
+            print(list)
+            profile=mymedical.objects.get(user=request.user.id)
+            a.p_date=request.POST.get("date")
+            a.medical_id=profile.id
             a.save()
-            # abc=mform.save(commit=False)# abc.patient_id=id # abc.medical_id=profile.id
-            #mform.save()
-            return redirect("give_medicines",id=id,)
+            # abc=mform.save(commit=False)# abc.patient_id=id # abc.medical_id=profile.id #.filter(p_date=date.today())
+            # mform.save()
+            return redirect("give_medicines",id=id)
         context={   "form":form,
                     "lform":lform,
+                    "mform":f,
+                    "total":total_price,
                 }
         return render(request,'give_medicines.html',context)
     else:
@@ -344,11 +356,12 @@ def bill(request,id):
     if request.user.is_medical:
         form1=Patient.objects.filter(id=id)
         form2=D_Medical.objects.filter(patient_id=id)
-        context={'form1':form1,
+        context={'form':form1,
                     'form2':form2,}
         return render(request,'bill.html',context)
-        pdf = render_to_pdf('pdf.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
+        # pdf = render_to_pdf('billing.html', context)
+        # return HttpResponse(pdf, content_type='application/pdf')
+
     else:
         return redirect("login")
 
@@ -358,12 +371,12 @@ def Test_result(request,id): #give test result by lab
     if request.user.is_authenticated():
         form=Patient.objects.get(id=id)
         lform=D_Lab.objects.filter(patient_id=id).order_by('-date')
-        mform=D_LabForm(request.POST or None)
+
         if request.POST.get('id') is not None:
             a = D_Lab.objects.get(id=request.POST.get('id'))
             a.is_sampled = True
-            a.result=request.POST.get("result")
-            a.amount=request.POST.get("amount")
+            a.result=request.POST.get('result')
+            a.amount=request.POST.get('amount')
             a.save()
             return redirect('Test_result',id=id)
         context={
@@ -425,12 +438,13 @@ def gpdf(request, *args, **kwargs):
     return HttpResponse(pdf, content_type='application/pdf')
 
 
-def billing(request,id):            #to download bill
-    if request.user.is_authenticated:
-        form1=Patient.objects.filter(id=id)
+def DownloadBill(request,id):            #to download bill
+    if request.user.is_medical:
+        form=Patient.objects.filter(id=id)
         form2=D_Medical.objects.filter(patient_id=id)
-        context={'form1':form1,
+        context={'form':form,
                         'form2':form2,}
+
         pdf = render_to_pdf('billing.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
     else:

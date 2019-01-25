@@ -67,7 +67,7 @@ def login_(request,*args,**kwargs):
     form=UserLoginForm(request.POST or None)
     if form.is_valid():
         new_user=User.objects.get(email__iexact=form.cleaned_data.get('email'))
-        login(request,new_user)
+        login(request,new_user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('index')
         if request.user.is_admin:
             return redirect('adminsdb')
@@ -88,6 +88,7 @@ def login_(request,*args,**kwargs):
 def logout_(request):
     logout(request)
     return redirect('login')
+
 
 def change_password(request):
     if request.method == 'POST':

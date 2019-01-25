@@ -62,6 +62,7 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's

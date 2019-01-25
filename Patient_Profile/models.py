@@ -1,5 +1,9 @@
 from django.db import models
+
+from django.utils.timezone import datetime
 from django.utils import timezone
+from datetime import date
+
 from Account.models import UserProfile
 from staff.models import Staff
 from doctor.models import doctor
@@ -26,25 +30,28 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.name
+
 class D_Medical(models.Model):
-    medicine_name=models.TextField(default='0')
-    comment=models.TextField(default='0')
-    follow_on_date=models.DateField(timezone.now(),null=True)
-    date=models.DateTimeField(timezone.now(),blank=False)
-    is_purchased=models.BooleanField(default=False,)
-    amount=models.IntegerField(default='0', blank=True, null=True)
-    patient=models.ForeignKey(Patient)
-    doctor=models.ForeignKey(doctor)
+    medicine_name   =models.TextField(default='0')
+    comment         =models.TextField(default='0')
+    follow_on_date  =models.DateField(timezone.now(),null=True)
+    date            =models.DateTimeField(timezone.now(),blank=False)
+    p_date          = models.DateField(default=timezone.now(),null=True,blank=True)
+    is_purchased    =models.BooleanField(default=False,)
+    amount          =models.IntegerField(default='0', blank=True, null=True)
+    patient         =models.ForeignKey(Patient)
+    doctor          =models.ForeignKey(doctor)
+    medical         =models.ForeignKey(medical,null=True,blank=True)
 
     def __str__(self):
         return self.patient.name
 
 class D_Lab(models.Model):
-    test_list=models.TextField(default='0')
-    comment=models.TextField(default='0')
+    test_list=models.CharField(max_length=100,default='0')
+    comment=models.CharField(max_length=200,default='0')
     is_sampled=models.BooleanField(default=False)
-    result=models.CharField(max_length=100,default='Pending',blank=True,null=True)
-    amount=models.IntegerField(default=0,null=True,blank=True)
+    result=models.CharField(max_length=100,default='Pending',blank=True)
+    amount=models.IntegerField(default='0',blank=True,null=True)
     date=models.DateField(timezone.now(),null=True)
     doctor=models.ForeignKey(doctor)
     patient=models.ForeignKey(Patient)

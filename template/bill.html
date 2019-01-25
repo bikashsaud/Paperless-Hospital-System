@@ -27,7 +27,7 @@
    <h4><strong> <u> Patient Information: </u> </strong></h4>
    <br>
 
-          {% for f in form1 %}
+          {% for f in form %}
               <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-3 col-form-label">Patint Name</label>
                 <div class="col-sm-9">  <h5>{{f.name}}</h5>
@@ -80,35 +80,42 @@
                         <th scope="col">Checked Date</th>
                         <th scope="col">Amount</th>
                       </tr>
-{% with name=0  %}
+              {% with total=1 %}
               {% for f in form2 %}
                       <tr>
-
                         <td>{{f.id}}</td>
                         <td>{{f.patient.name}}</td>
                         <td>{{f.medicine_name}}</td>
                         <td>{{f.comment}}</td>
                         <td>{{f.follow_on_date}}</td>
                         <td>{{f.date}}</td>
-                        <td>{{f.amount}}</td>
-
-                        <!-- {% block contenido %}
-                        <p>amount={{f.amount|add:f.amount}}</p>
-                        {% endblock %} -->
-                        {% with names=f.amount%}
-
-                          {{name|add:names}}
-                        {%  endwith %}
-
+                        <td >{{f.amount}}</td>
                       </tr>
-              {% endfor %}
-              {% endwith%}
+
+                      <!-- <p id="demo"></p> -->
+                      <script>
+                        // var x = document.getElementById("frm1").length;
+                          // document.getElementById("demo").innerHTML = total;
+                          //   // total+=d;
+                          //   // document.write("data amount:"+ data);
+                          // var d="bikash saud";
+                          // document.write(d);
+
+                        </script>
+<!--
+                        {% block contenido %}
+                        total={{f.amount|add:f.amount}}
+												{% endblock%} -->
+                        <br>
+                      {% endfor %}
+                      {% endwith %}
               </thead>
               </table>
             </div>
           </div>
-Total:
-          <a href="{%url 'billing'%}"><button type="button" name="button" class='btn btn-primary' style="padding:0 300px; 0 200px;"><h5>Download Bill</h5></button></a>
+          <div class="">
+        <br>
+          </div>
 
-   </div>
+<br><br>
 {% endblock %}

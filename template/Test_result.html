@@ -34,7 +34,7 @@
 
 
 		<div class="md-col-12 thumbnail">
-			<h2>Test Result......</h2>
+			<h2>Test Result Card......</h2>
 
 										<table class="table table-dark">
 											<thead>
@@ -52,8 +52,9 @@
 
 
 												<tbody>
-													<form class="" action="" method="post">
 													{% for i in lform %}
+													<form class="" action="" method="post">
+
 													<input type="hidden" name="id" value="{{i.id}}">
 												<tr>
 													{%csrf_token%}
@@ -61,7 +62,7 @@
 													<td>{{i.date}}</td>
 													<td>{{i.test_list}}</td>
 													<td>{{i.comment}}</td>
-													
+
 													<td  style="color:black;">
 															<input type="integer" name="amount" value="{{i.amount}}">
 													</td>
@@ -81,8 +82,9 @@
 													</td>
 
 												</tr>
-												{% endfor %}
+
 											</form>
+														{% endfor %}
 										</tbody>
 									</table>
 								</div>

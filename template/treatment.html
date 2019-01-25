@@ -30,11 +30,11 @@
 					<li style="padding:15px;">Age:{{form.age}}</li>
 					<li style="padding:15px;">Phone No.:{{form.phoneno}}</li>
 					<li style="padding:15px;">Address:{{form.address}}</li>
-					<li style="padding:15px;">Date:{{form.date}}</li>
+					<li style="padding:15px;" >Date:{{form.date}}</li>
 					<li style="padding:15px;">About:{{form.about}}</li>
 
 					<div class="" style="color:white;">
-					
+
 				</div>
 			</form>
 		</div>
@@ -107,7 +107,6 @@
 										<td>{{i.is_sampled}}</td>
 										<td>{{i.result}}</td>
 										<!-- <td>{{form2.is_purchased}}</td> -->
-
 									</tr>
 									{% endfor %}
 								</thead>
@@ -136,16 +135,21 @@
 								 <td>{{form2.medicine_name}}</td>
 								 <td>{{form2.comment}}</td>
 								 <td>{{form2.follow_on_date }}</td>
-								 <td>{{form2.date}}</td>
+								 <td style="color:black;">{{form2.date}}</td>
 								 <td>{{form2.is_purchased}}</td>
 
 								 <td><button type="submit" name="button" value="Save" class="btn btn-primary">Submit</button></td>
 							</tr>
 						</tbody>
 					</table>
+										<!-- <p>Rendered text with {{ pub_date|date:"c" }}</p>
+											{% comment "Optional note" %}
+					    			<p>Commented out text with {{ create_date|date:"c" }}</p>
+											{% endcomment %}
+											{% lorem 3 p random%} -->
+											<!-- It is {% now "jS F Y" %} -->
 
 				</form>
-
 				<div class="">
 					<a href="{% url 'tests' form.id %}"><button type="button" name="button" class='btn btn-primary' style="padding:0 300px; 0 200px;"><h5>Add Lab Tests</h5></button></a>
 				</div>

@@ -10,9 +10,9 @@ from Account.models import UserProfile
 from django.contrib.auth import authenticate, get_user_model
 from Patient_Profile.models import Patient,D_Medical,D_Lab,Test_result,Medicine
 
+
 User=get_user_model()
 # from .models import User
-
 
 class StaffForm(forms.ModelForm):
 	class Meta:
@@ -129,8 +129,8 @@ class EditAProfileForm(forms.ModelForm):
 class D_MedicalForm(forms.ModelForm):
 	medicine_name=forms.CharField(label='Medicine Name',widget=forms.TextInput(attrs={"class":'form-control'}))
 	comment=forms.CharField(label='Comments',widget=forms.TextInput(attrs={"class":'form-control'}))
-	follow_on_date=forms.CharField(label='Follow On Date',widget=forms.TextInput(attrs={"class":'form-control'}))
-	date=forms.CharField(label='Date',widget=forms.TextInput(attrs={"class":'form-control'}))
+	follow_on_date=forms.CharField(label='Follow On Date',widget=forms.TextInput(attrs={"class":'form-control datepicker'}))
+	date=forms.CharField(label='Date',widget=forms.SelectDateWidget,)
 	class Meta:
 		model=D_Medical
 		exclude=['doctor','patient']

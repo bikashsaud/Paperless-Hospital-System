@@ -26,8 +26,7 @@
    <br><br><hr>
    <h4><strong> <u> Patient Information: </u> </strong></h4>
    <br>
-
-          {% for f in form1 %}
+          {% for f in form %}
               <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-3 col-form-label">Patint Name</label>
                 <div class="col-sm-9">  <h5>{{f.name}}</h5>
@@ -80,26 +79,17 @@
                         <th scope="col">Checked Date</th>
                         <th scope="col">Amount</th>
                       </tr>
-{% with name=0  %}
+                      {% with data=0  %}
               {% for f in form2 %}
                       <tr>
-
                         <td>{{f.id}}</td>
                         <td>{{f.patient.name}}</td>
                         <td>{{f.medicine_name}}</td>
                         <td>{{f.comment}}</td>
                         <td>{{f.follow_on_date}}</td>
                         <td>{{f.date}}</td>
-                        <td>{{f.amount}}</td>
-
-                        <!-- {% block contenido %}
-                        <p>amount={{f.amount|add:f.amount}}</p>
-                        {% endblock %} -->
-                        {% with names=f.amount%}
-
-                          {{name|add:names}}
-                        {%  endwith %}
-
+                        <td >{{f.amount}}</td>
+  								   
                       </tr>
               {% endfor %}
               {% endwith%}
@@ -107,8 +97,6 @@
               </table>
             </div>
           </div>
-
-          Total Amount:950
 
 
    </div>
